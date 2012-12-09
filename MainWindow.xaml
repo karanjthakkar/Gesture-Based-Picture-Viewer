@@ -1,0 +1,405 @@
+﻿<Window x:Name="window" x:Class="PictureViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Picture Viewer" 
+        Height="800" Width="1366" WindowState="Maximized" WindowStyle="None">
+    <Window.Resources>
+        <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Storyboard x:Key="LeftAnimate">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="previous">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="next">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="current">
+                <EasingThicknessKeyFrame KeyTime="0" Value="2000,0,-2000,0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="RightAnimate">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="previous">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="next">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="current">
+                <EasingThicknessKeyFrame KeyTime="0" Value="-2000,0,2000,0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Style TargetType="{x:Type Image}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+        </Style>
+        <Style x:Key="{x:Type ProgressBar}" TargetType="{x:Type ProgressBar}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ProgressBar}">
+                        <Grid MinHeight="20" MinWidth="40" Background="{TemplateBinding Background}">
+                            <Border x:Name="PART_Track" >
+                                <Border.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource BorderMediumColor}" />
+                                </Border.BorderBrush>
+                            </Border>
+                            <Border x:Name="PART_Indicator"  HorizontalAlignment="Left" Background="{TemplateBinding Foreground}">
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="{DynamicResource BorderLightColor}" Offset="0.0" />
+                                                <GradientStop Color="{DynamicResource BorderMediumColor}" Offset="1.0" />
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Border.BorderBrush>
+                                <Grid ClipToBounds="True" x:Name="Animation">
+                                    <Rectangle x:Name="PART_GlowRect" HorizontalAlignment="Left"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="{DynamicResource ControlLightColor}" Offset="0" />
+                        <GradientStop Color="{DynamicResource ControlMediumColor}" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="{DynamicResource ControlMediumColor}" Offset="0" />
+                        <GradientStop Color="{DynamicResource ControlDarkColor}" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--Control colors.-->
+        <Color x:Key="WindowColor">#FFE8EDF9</Color>
+        <Color x:Key="ContentAreaColorLight">#FFC5CBF9</Color>
+        <Color x:Key="ContentAreaColorDark">#FF7381F9</Color>
+
+        <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
+        <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
+        <Color x:Key="DisabledForegroundColor">#FF888888</Color>
+
+        <Color x:Key="SelectedBackgroundColor">#FFC5CBF9</Color>
+        <Color x:Key="SelectedUnfocusedColor">#FFDDDDDD</Color>
+
+        <Color x:Key="ControlLightColor">White</Color>
+        <Color x:Key="ControlMediumColor">#FF7381F9</Color>
+        <Color x:Key="ControlDarkColor">#FF211AA9</Color>
+
+        <Color x:Key="ControlMouseOverColor">#FF3843C4</Color>
+        <Color x:Key="ControlPressedColor">#FF211AA9</Color>
+
+
+        <Color x:Key="GlyphColor">#FF444444</Color>
+        <Color x:Key="GlyphMouseOver">sc#1, 0.004391443, 0.002428215, 0.242281124</Color>
+
+        <!--Border colors-->
+        <Color x:Key="BorderLightColor">#FFCCCCCC</Color>
+        <Color x:Key="BorderMediumColor">#FF888888</Color>
+        <Color x:Key="BorderDarkColor">#FF444444</Color>
+
+        <Color x:Key="PressedBorderLightColor">#FF888888</Color>
+        <Color x:Key="PressedBorderDarkColor">#FF444444</Color>
+
+        <Color x:Key="DisabledBorderLightColor">#FFAAAAAA</Color>
+        <Color x:Key="DisabledBorderDarkColor">#FF888888</Color>
+
+        <Color x:Key="DefaultBorderBrushDarkColor">Black</Color>
+
+        <!--Control-specific resources.-->
+        <Color x:Key="HeaderTopColor">#FFC5CBF9</Color>
+        <Color x:Key="DatagridCurrentCellBorderColor">Black</Color>
+        <Color x:Key="SliderTrackDarkColor">#FFC5CBF9</Color>
+
+        <Color x:Key="NavButtonFrameColor">#FF3843C4</Color>
+
+        <LinearGradientBrush x:Key="MenuPopupBrush"
+                     EndPoint="0.5,1"
+                     StartPoint="0.5,0">
+            <GradientStop Color="{DynamicResource ControlLightColor}"
+                Offset="0" />
+            <GradientStop Color="{DynamicResource ControlMediumColor}"
+                Offset="0.5" />
+            <GradientStop Color="{DynamicResource ControlLightColor}"
+                Offset="1" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="ProgressBarIndicatorAnimatedFill"
+                     StartPoint="0,0"
+                     EndPoint="1,0">
+            <LinearGradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#000000FF"
+                    Offset="0" />
+                    <GradientStop Color="#600000FF"
+                    Offset="0.4" />
+                    <GradientStop Color="#600000FF"
+                    Offset="0.6" />
+                    <GradientStop Color="#000000FF"
+                    Offset="1" />
+                </GradientStopCollection>
+            </LinearGradientBrush.GradientStops>
+        </LinearGradientBrush>
+    </Window.Resources>
+    <Grid DataContext="{Binding ElementName=window}" Name="Grid1" ClipToBounds="True">
+        <Grid.Background>
+            <ImageBrush x:Name="backPic" ImageSource="{Binding backgroundPic}" />
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="181*"/>
+            <ColumnDefinition Width="181*"/>
+            <ColumnDefinition Width="181*"/>
+            <ColumnDefinition Width="181*"/>
+            <ColumnDefinition Width="181*"/>
+            <ColumnDefinition Width="200*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="24*"/>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="269*"/>
+            <RowDefinition Height="270*"/>
+            <RowDefinition Height="122*"/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+        <ProgressBar x:Name="dressesBar" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" Height="90" Width="120" VerticalAlignment="Center" Opacity="1" Visibility="Collapsed" Foreground="#FF5050F1" BorderBrush="White" RenderTransformOrigin="0.5,0.5" >
+            <ProgressBar.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </ProgressBar.Background>
+            <ProgressBar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ProgressBar.RenderTransform>
+        </ProgressBar>
+        <Border Name="Dresses"   MouseEnter="onMouseEnter" MouseLeave="onMouseLeave" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="120" Width="90" >
+            <Border.Style>
+                <Style>
+                    <Setter Property="Border.Background" Value="White"/>
+                    <Style.Triggers>
+                        <Trigger Property="Border.IsMouseOver" Value="True">
+                            <Setter Property="Border.Background" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Border.Effect>
+                <DropShadowEffect Color="White" Opacity="1" ShadowDepth="-1" BlurRadius="40"/>
+            </Border.Effect>
+            <StackPanel Orientation="Vertical" Margin="5">
+                <Image Source="Images/dbutton.jpg" Height="80"/>
+                <TextBlock Name="dressesLabel" Text="Dresses" HorizontalAlignment="Center" FontFamily="Segoe Print" FontWeight="Bold" FontSize="16"/>
+            </StackPanel>
+        </Border>
+        <ProgressBar x:Name="carsBar" Grid.Column="6" Grid.Row="3" HorizontalAlignment="Center" Height="90" Width="120" VerticalAlignment="Center" Opacity="1" Visibility="Collapsed" Foreground="#FF5050F1" BorderBrush="White" RenderTransformOrigin="0.5,0.5" >
+            <ProgressBar.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </ProgressBar.Background>
+            <ProgressBar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ProgressBar.RenderTransform>
+        </ProgressBar>
+        <Border Name="Cars"   MouseEnter="onMouseEnter" MouseLeave="onMouseLeave" Grid.Column="6" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="120" Width="90" >
+            <Border.Style>
+                <Style>
+                    <Setter Property="Border.Background" Value="White"/>
+                    <Style.Triggers>
+                        <Trigger Property="Border.IsMouseOver" Value="True">
+                            <Setter Property="Border.Background" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Border.Effect>
+                <DropShadowEffect Color="White" Opacity="1" ShadowDepth="-1" BlurRadius="40"/>
+            </Border.Effect>
+            <StackPanel Orientation="Vertical" Margin="5">
+                <Image Source="Images/cbutton.jpg" Height="80"/>
+                <TextBlock Name="carsLabel" Text="Cars" HorizontalAlignment="Center" FontFamily="Segoe Print" FontWeight="Bold" FontSize="16"/>
+            </StackPanel>
+        </Border>
+        <ProgressBar x:Name="jewelleryBar" Grid.Column="6" Grid.Row="4" HorizontalAlignment="Center" Height="90" Width="120" VerticalAlignment="Center" Opacity="1" Visibility="Collapsed" Foreground="#FF5050F1" BorderBrush="White" RenderTransformOrigin="0.5,0.5">
+            <ProgressBar.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </ProgressBar.Background>
+            <ProgressBar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ProgressBar.RenderTransform>
+        </ProgressBar>
+        <Border Name="Jewellery"   MouseEnter="onMouseEnter" MouseLeave="onMouseLeave" Grid.Column="6" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="120" Width="90">
+            <Border.Style>
+                <Style>
+                    <Setter Property="Border.Background" Value="White"/>
+                    <Style.Triggers>
+                        <Trigger Property="Border.IsMouseOver" Value="True">
+                            <Setter Property="Border.Background" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Border.Effect>
+                <DropShadowEffect Color="White" Opacity="1" ShadowDepth="-1" BlurRadius="40"/>
+            </Border.Effect>
+            <StackPanel Orientation="Vertical" Margin="5">
+                <Image Source="Images/jbutton.jpg" Height="80"/>
+                <TextBlock Name="jewelleryLabel" Text="Jewellery" HorizontalAlignment="Center" FontFamily="Segoe Print" FontWeight="Bold" FontSize="16"/>
+            </StackPanel>
+        </Border>
+        <ProgressBar x:Name="kitchenBar" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Height="90" Width="120" VerticalAlignment="Center" Opacity="1" Visibility="Collapsed" Foreground="#FF5050F1" BorderBrush="White" RenderTransformOrigin="0.5,0.5" >
+            <ProgressBar.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </ProgressBar.Background>
+            <ProgressBar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ProgressBar.RenderTransform>
+        </ProgressBar>
+        <Border Name="Kitchen"   MouseEnter="onMouseEnter" MouseLeave="onMouseLeave" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="120" Width="90" >
+            <Border.Style>
+                <Style>
+                    <Setter Property="Border.Background" Value="White"/>
+                    <Style.Triggers>
+                        <Trigger Property="Border.IsMouseOver" Value="True">
+                            <Setter Property="Border.Background" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Border.Effect>
+                <DropShadowEffect Color="White" Opacity="1" ShadowDepth="-1" BlurRadius="40"/>
+            </Border.Effect>
+            <StackPanel Orientation="Vertical" Margin="5">
+                <Image Source="Images/kbutton.jpg" Height="80"/>
+                <TextBlock Name="kitchenLabel" Text="Kitchen" HorizontalAlignment="Center" FontFamily="Segoe Print" FontWeight="Bold" FontSize="16"/>
+            </StackPanel>
+        </Border>
+        <ProgressBar x:Name="quitBar" Grid.Column="6" Grid.Row="5" HorizontalAlignment="Right" Height="90" VerticalAlignment="Bottom" Width="90" Opacity="1" Visibility="Collapsed" Foreground="#FF5050F1" BorderBrush="White" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
+            <ProgressBar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ProgressBar.RenderTransform>
+            <ProgressBar.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </ProgressBar.Background>
+        </ProgressBar>
+        <Border Name="Quit"  MouseEnter="onMouseEnterQ" MouseLeave="onMouseLeaveQ"  BorderBrush="Transparent" Grid.Column="6" Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.RowSpan="2">
+            <Border.Effect>
+                <DropShadowEffect Color="White" Opacity="1" ShadowDepth="-100" BlurRadius="60"/>
+            </Border.Effect>
+            <Image Source="Images/close-button.png" Width="90" Height="90" RenderOptions.BitmapScalingMode="HighQuality" Opacity="1"/>
+        </Border>
+        <ProgressBar Name="allBar" HorizontalAlignment="Center" Height="32" Width="100" VerticalAlignment="Center" Opacity="1" Visibility="Collapsed" Foreground="Blue" BorderBrush="White" RenderTransformOrigin="0.5,0.5" Grid.Column="3" Grid.Row="2" Background="White" />
+        <Border Name="AllImages"   MouseEnter="onMouseEnter" MouseLeave="onMouseLeave" Height="32" Width="100" Grid.Column="3" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Border.Style>
+                <Style>
+                    <Setter Property="Border.Background" Value="White"/>
+                    <Style.Triggers>
+                        <Trigger Property="Border.IsMouseOver" Value="True">
+                            <Setter Property="Border.Background" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Border.Effect>
+                <DropShadowEffect Color="White" Opacity="1" ShadowDepth="-1" BlurRadius="40"/>
+            </Border.Effect>
+            <TextBlock Name="allLabel" Text="All Images" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe Print" FontWeight="Bold" FontSize="16"/>
+        </Border>
+        <ProgressBar Name="backBar" HorizontalAlignment="Center" Height="32" Width="170" VerticalAlignment="Center" Opacity="1" Visibility="Collapsed" Foreground="Blue" BorderBrush="White" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Grid.Row="2" Background="White" />
+        <Border Name="back"  MouseEnter="onMouseEnter" MouseLeave="onMouseLeave" Height="32" Width="170" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Border.Style>
+                <Style>
+                    <Setter Property="Border.Background" Value="White"/>
+                    <Style.Triggers>
+                        <Trigger Property="Border.IsMouseOver" Value="True">
+                            <Setter Property="Border.Background" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Border.Effect>
+                <DropShadowEffect Color="White" Opacity="1" ShadowDepth="-1" BlurRadius="40"/>
+            </Border.Effect>
+            <TextBlock Name="backLabel" Text="Change Background" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe Print" FontWeight="Bold" FontSize="16"/>
+        </Border>
+        <Canvas x:Name="StickMen" HorizontalAlignment="Right" VerticalAlignment="Stretch" Height="150" Width="150" Grid.Row="5" Grid.Column="0" Grid.RowSpan="2"/>
+        <Image x:Name="next" Source="{Binding NextPicture}" StretchDirection="Both" Stretch="Uniform" ClipToBounds="True" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="HighQuality" RenderTransformOrigin="0.5,0.5" Opacity="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="5"/>
+        <Image x:Name="previous" Source="{Binding PreviousPicture}" StretchDirection="Both" Stretch="Uniform" ClipToBounds="True" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="HighQuality" RenderTransformOrigin="0.5,0.5" Opacity="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="5"/>
+        <Image x:Name="current" Source="{Binding Picture}" StretchDirection="Both" Stretch="Uniform" ClipToBounds="True" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="HighQuality" RenderTransformOrigin="0.5,0.5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="5"/>
+        <TextBlock Name="Text1" Text="Gesture Based Picture Viewer" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="2" FontFamily="Segoe UI Semibold" FontWeight="Bold" TextDecorations="Underline"/>
+        <Border Name="Text2_Border" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="6" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
+            <Border.Effect>
+                <DropShadowEffect Color="White" Opacity="1" ShadowDepth="-1" BlurRadius="40"/>
+            </Border.Effect>
+            <TextBlock x:Name="Text2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontFamily="Segoe UI Semibold">
+                <Hyperlink Name="link" NavigateUri="http://karanjthakkar.wordpress.com" RequestNavigate="onLinkClick" Foreground="White">http://karanjthakkar.wordpress.com</Hyperlink>
+            </TextBlock>
+        </Border>
+        <TextBlock Name="Text3" Text="Thank you for using this code! Share it :D" Foreground="#FF0A0ABF" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="40" Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="3" FontFamily="Segoe UI Semibold" FontWeight="Bold" Opacity="0" Margin="0,0,0,100"/>
+        <TextBlock Name="Text4" Text="(Hover on the link and say `CLICK`)" Foreground="#FFCB7878" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="26" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="3" FontFamily="Segoe UI Semibold" FontWeight="Bold" Opacity="0" TextWrapping="Wrap" Margin="0,0,0,35"/>
+        <TextBlock Name="Text9" Text="(or just use a Mouse :P)" Foreground="#FFCB7878" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="26" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="3" FontFamily="Segoe UI Semibold" FontWeight="Bold" Opacity="0" TextWrapping="Wrap"/>
+        <Border Name="Text5_Border"  Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
+            <Border.Effect>
+                <DropShadowEffect Color="White" Opacity="1" ShadowDepth="-1" BlurRadius="40"/>
+            </Border.Effect>
+            <TextBlock x:Name="Text5" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="4" FontFamily="Segoe UI Semibold" FontWeight="Bold" Opacity="0">
+                <Hyperlink Name="link1" NavigateUri="http://karanjthakkar.wordpress.com" RequestNavigate="onLinkClick" Foreground="#FF21E821">My Webpage</Hyperlink>
+            </TextBlock>
+        </Border>
+        <Border Name="Text6_Border"  Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
+            <Border.Effect>
+                <DropShadowEffect Color="White" Opacity="1" ShadowDepth="-1" BlurRadius="40"/>
+            </Border.Effect>
+            <TextBlock x:Name="Text6" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="4" FontFamily="Segoe UI Semibold" FontWeight="Bold" Opacity="0">
+                <Hyperlink Name="link2" NavigateUri="http://github.com/karanjthakkar/Gesture-Based-Picture-Viewer" RequestNavigate="onLinkClick" Foreground="#FF21E821">Github Project Page</Hyperlink>
+            </TextBlock>
+        </Border>
+        <TextBlock Name="Text7" Text="Application will close in " Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="26" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="6" FontFamily="SimSun-ExtB" FontWeight="Bold" Opacity="0"/>
+        <TextBlock Name="Text8" Text="" Foreground="Blue" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="26"  Grid.Column="4" Grid.Row="6" FontFamily="SimSun-ExtB" FontWeight="Bold" Opacity="0"/>
+    </Grid>
+</Window>
