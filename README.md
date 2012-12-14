@@ -1,4 +1,18 @@
-# Gesture Based Picture Viewer
+### Gesture Based Picture Viewer
+
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [Introduction](#introduction)
+- [Functionalities Implemented](#functionalities-implemented)
+- [Prerequisities](#prerequisities)
+- [Features to be modified/added](#features-to-be-modifiedadded)
+- [Note](#note)
+- [Preview](#preview)
+- [Downloading the source code](#downloading-the-source-code)
+- [Contributors](#contributors)
+- [LICENSE](#license)
+
+# Introduction
 
 This is the code of the WPF application for a Gesture Based Picture Viewer using Microsoft Kinect. 
 
