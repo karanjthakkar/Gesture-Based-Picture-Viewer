@@ -1,5 +1,7 @@
 # Gesture Based Picture Viewer
 
+---
+
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [Introduction](#introduction)
@@ -11,6 +13,8 @@
 - [Downloading the source code](#downloading-the-source-code)
 - [Contributors](#contributors)
 - [LICENSE](#license)
+
+---
 
 ### Introduction
 
