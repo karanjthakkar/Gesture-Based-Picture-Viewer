@@ -50,7 +50,7 @@ For users who have used github before: You can simply fork the repository(if you
 
 # Contributors
 
-None, apart from me.
+1. [Navya Manoj](http://in.linkedin.com/pub/navya-manoj/29/739/592)
 
 # LICENSE
 
