@@ -1,4 +1,4 @@
-### Gesture Based Picture Viewer
+# Gesture Based Picture Viewer
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
@@ -12,7 +12,7 @@
 - [Contributors](#contributors)
 - [LICENSE](#license)
 
-# Introduction
+### Introduction
 
 This is the code of the WPF application for a Gesture Based Picture Viewer using Microsoft Kinect. 
 
@@ -23,7 +23,7 @@ The code has been tested on the following configuration:
 
 ---
 
-# Functionalities Implemented
+### Functionalities Implemented
 
 1. Swipe Left
 2. Swipe Right
@@ -38,7 +38,7 @@ See the Preview below to get a feel of how to use those gestures.
 
 ---
 
-# Prerequisities
+### Prerequisities
 
 Before you run the Visual Studio Solution file (.sln) as it is, please make sure that:
 
@@ -48,7 +48,7 @@ Before you run the Visual Studio Solution file (.sln) as it is, please make sure
 
 ---
 
-# Features to be modified/added
+### Features to be modified/added
 
 1. The range of the pan is very less. What I mean is, once the image is zoomed to some extent, panning using the right hand **DOES NOT** cover the entire picture. I've tried some modifications of my own, but none that work neatly.
 
@@ -56,19 +56,19 @@ Before you run the Visual Studio Solution file (.sln) as it is, please make sure
 
 ---
 
-# Note
+### Note
 
 A lot of the lines in the code maybe redundant or unnecessary. It is my first attempt at making a Windows app using C# and XAML. This code is by no means perfect or elite. So, fork this repo, see if there are any modifications you can make that improve the code and make a pull request and I'll merge any changes that I feel make this code better than it previously was. I'll also add your name to the contributors list. Lets make this code as clean and neat as possible.
 
 ---
 
-# Preview
+### Preview
 
 See it in action [here](http://youtu.be/v8SumS-I1qo)
 
 ---
 
-# Downloading the source code
+### Downloading the source code
 
 For users unfamiliar with `github`: You can download the source code as a zip file by clicking [here](https://github.com/karanjthakkar/face-extraction/archive/master.zip)
 
@@ -76,13 +76,13 @@ For users who have used github before: You can simply fork the repository(if you
 
 ---
 
-# Contributors
+### Contributors
 
 1. [Navya Manoj](http://in.linkedin.com/pub/navya-manoj/29/739/592)
 
 ---
 
-# LICENSE
+### LICENSE
 
 [Simplified BSD](http://en.wikipedia.org/wiki/BSD_licenses#2-clause_license_.28.22Simplified_BSD_License.22_or_.22FreeBSD_License.22.29)(See the [LICENSE](https://github.com/karanjthakkar/face-extraction/blob/master/LICENSE.txt) file)
 
