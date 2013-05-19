@@ -74,7 +74,7 @@ See it in action [here](http://youtu.be/v8SumS-I1qo)
 
 ### Downloading the source code
 
-For users unfamiliar with `github`: You can download the source code as a zip file by clicking [here](https://github.com/karanjthakkar/face-extraction/archive/master.zip)
+For users unfamiliar with `github`: You can download the source code as a zip file by clicking [here](https://github.com/karanjthakkar/Gesture-Based-Picture-Viewer/archive/master.zip)
 
 For users who have used github before: You can simply fork the repository(if you intend to make changes and pull them to master) and/or clone it on your local machine
 
@@ -88,7 +88,7 @@ For users who have used github before: You can simply fork the repository(if you
 
 ### LICENSE
 
-[Simplified BSD](http://en.wikipedia.org/wiki/BSD_licenses#2-clause_license_.28.22Simplified_BSD_License.22_or_.22FreeBSD_License.22.29)(See the [LICENSE](https://github.com/karanjthakkar/face-extraction/blob/master/LICENSE.txt) file)
+[Simplified BSD](http://en.wikipedia.org/wiki/BSD_licenses#2-clause_license_.28.22Simplified_BSD_License.22_or_.22FreeBSD_License.22.29)(See the [LICENSE](https://github.com/karanjthakkar/Gesture-Based-Picture-Viewer/blob/master/LICENSE.txt) file)
 
 For any feedback, comment, advice, bugs, please contact me at:
 **karanjthakkar [at] gmail [dot] com**
